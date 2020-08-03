@@ -5,9 +5,6 @@ FROM alpine:3.12.0 as builder
 RUN echo http://dl-cdn.alpinelinux.org/alpine/v3.4/main > /etc/apk/repositories
 
 RUN apk add --no-cache --virtual build-dependencies \
-    --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
-    --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
-    --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
     git \
     build-base \
     binutils-dev \
@@ -25,11 +22,22 @@ RUN apk add --no-cache --virtual build-dependencies \
     boost-dev \
     libffi-dev \
     readline-dev \
-    qt-dev \
+    qt-dev
+
+RUN apk add --no-cache --virtual additional-build-dependencies \
+    --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
+    --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
     rapidjson-dev \
     libexecinfo-dev
 
 RUN git clone --depth 1 https://gitlab.lip6.fr/vlsi-eda/coriolis.git /coriolis
+
+#RUN mkdir -p /coriolis/flute/build
+#WORKDIR /coriolis/flute/build
+
+#RUN cmake ..
+#RUN make
+#RUN make install
 
 WORKDIR /
 
