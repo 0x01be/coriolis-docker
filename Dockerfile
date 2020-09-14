@@ -30,10 +30,8 @@ RUN apk add --no-cache --virtual additional-build-dependencies \
     rapidjson-dev \
     libexecinfo-dev
 
-ENV REVISION devel
-
-
 RUN mkdir -p /root/coriolis-2.x/src/support
+ENV REVISION devel
 RUN git clone --depth 1 --branch ${REVISION} https://gitlab.lip6.fr/vlsi-eda/coriolis.git /root/coriolis-2.x/src/coriolis
 
 WORKDIR /root/coriolis-2.x/src/coriolis/
