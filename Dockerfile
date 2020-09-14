@@ -1,10 +1,8 @@
-FROM 0x01be/yosys as yosys
-
 FROM alpine as builder
 
 RUN echo http://dl-cdn.alpinelinux.org/alpine/v3.4/main > /etc/apk/repositories
 
-RUN apk add --no-cache --virtual build-dependencies \
+RUN apk add --no-cache --virtual coriolis-build-dependencies \
     git \
     build-base \
     binutils-dev \
@@ -22,7 +20,9 @@ RUN apk add --no-cache --virtual build-dependencies \
     boost-dev \
     libffi-dev \
     readline-dev \
-    qt-dev
+    qt-dev \
+    doxygen \
+    graphviz
 
 RUN apk add --no-cache --virtual additional-build-dependencies \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
