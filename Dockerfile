@@ -1,6 +1,6 @@
 FROM 0x01be/yosys as yosys
 
-FROM alpine:3.12.0 as builder
+FROM alpine as builder
 
 RUN echo http://dl-cdn.alpinelinux.org/alpine/v3.4/main > /etc/apk/repositories
 
@@ -30,16 +30,13 @@ RUN apk add --no-cache --virtual additional-build-dependencies \
     rapidjson-dev \
     libexecinfo-dev
 
-RUN git clone --depth 1 https://gitlab.lip6.fr/vlsi-eda/coriolis.git /coriolis
+ENV REVISION devel
 
-#RUN mkdir -p /coriolis/flute/build
-#WORKDIR /coriolis/flute/build
 
-#RUN cmake ..
-#RUN make
-#RUN make install
+RUN mkdir -p /root/coriolis-2.x/src/support
+RUN git clone --depth 1 --branch ${REVISION} https://gitlab.lip6.fr/vlsi-eda/coriolis.git /root/coriolis-2.x/src/coriolis
 
-WORKDIR /
+WORKDIR /root/coriolis-2.x/src/coriolis/
 
-RUN make -f /coriolis/bootstrap/Makefile.package build
+RUN make install
 
